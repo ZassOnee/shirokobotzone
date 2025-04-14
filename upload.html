@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload Script & Dapatkan Panel Gratis~!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -17,7 +18,6 @@
       overflow-x: hidden;
       color: white;
       text-align: center;
-      position: relative;
       background: rgba(0, 0, 0, 0.6);
     }
 
@@ -95,6 +95,15 @@
       from {opacity: 0; transform: translateY(-20px);}
       to {opacity: 1; transform: translateY(0);}
     }
+
+    a {
+      color: #89CFF0;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -110,14 +119,14 @@
     <li>1. Upload script ke Mediafire, Google Drive, atau sejenisnya.</li>
     <li>2. Salin link download file tersebut.</li>
     <li>3. Isi form di bawah ini dengan data lengkap kamu.</li>
-    <li>4. Tunggu verifikasi dari tim Shiroko. Script kamu akan muncul di halaman utama!</li>
+    <li>4. Script kamu akan muncul langsung di halaman Script Gratis!</li>
   </ul>
 
-  <p><strong>Contoh Upload Mediafire:</strong><br>
-    Kunjungi <a href="https://www.mediafire.com/" target="_blank" style="color:#89CFF0;">Mediafire</a>, login/daftar, upload script (.zip atau .js), dan salin link-nya~
+  <p><strong>Contoh Upload:</strong><br>
+    <a href="https://www.mediafire.com/" target="_blank">Mediafire</a>, <a href="https://drive.google.com/" target="_blank">Google Drive</a>, dsb.
   </p>
 
-  <form action="https://script.google.com/macros/s/AKfycbxhG1ECQGg4FLDdqrOqAu1p1xHjYUCIML8gbkHVL8NAvAuim-VIyX7BQTk6_pM44Ik/exec" method="POST">
+  <form id="uploadForm">
     <input type="text" name="nama" placeholder="Nama Kamu" required>
     <input type="text" name="wa" placeholder="Nomor WhatsApp (08xxxx)" required>
     <input type="text" name="judul" placeholder="Judul Script" required>
@@ -125,5 +134,38 @@
     <input type="url" name="link" placeholder="Link Download (https://...)" required>
     <button type="submit">Upload Sekarang</button>
   </form>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nama = this.nama.value.trim();
+      const wa = this.wa.value.trim();
+      const judul = this.judul.value.trim();
+      const deskripsi = this.deskripsi.value.trim();
+      const link = this.link.value.trim();
+
+      if (!nama || !wa || !judul || !link) {
+        alert('Semua field wajib diisi kecuali deskripsi!');
+        return;
+      }
+
+      const newScript = {
+        nama,
+        wa,
+        judul,
+        deskripsi,
+        link,
+        download: 0
+      };
+
+      const existing = JSON.parse(localStorage.getItem('scripts') || '[]');
+      existing.push(newScript);
+      localStorage.setItem('scripts', JSON.stringify(existing));
+
+      alert('Coba tebak^^');
+      window.location.href = "script.html"; // redirect ke halaman script
+    });
+  </script>
 </body>
 </html>
