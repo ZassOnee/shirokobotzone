@@ -2,240 +2,172 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Script Gratis - Shiroko's Corner</title>
-  <link rel="icon" href="https://files.catbox.moe/bc7roh.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Script Gratis | Shiroko</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
   <style>
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
     }
 
-    body, html {
-      height: 100%;
-      font-family: 'Poppins', sans-serif;
-      color: #2c3e50;
-      overflow-x: hidden;
+    body {
+      background-color: #000;
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
 
-    #background-video {
+    #bgVideo {
       position: fixed;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0;
       min-width: 100%;
       min-height: 100%;
       z-index: -1;
       object-fit: cover;
-      filter: brightness(0.6);
+      opacity: 0.2;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 15px;
-      margin-top: 3rem;
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
     }
 
-    .page-title {
-      text-align: center;
-      font-size: 2.7rem;
-      font-weight: 700;
-      color: #4a90e2;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .page-title::after {
-      content: '☆';
-      position: absolute;
-      right: -25px;
-      top: 10px;
-      color: #ff9ff3;
-      font-size: 2rem;
-    }
-
-    section h2 {
-      font-size: 1.6rem;
-      color: #396bba;
-      margin-bottom: 1rem;
-    }
-
-    .alert-box {
-      background-color: #fff3f7;
-      border-left: 5px solid #ff6b81;
-      padding: 1rem;
+    input[type="search"] {
+      width: 80%;
+      padding: 10px;
+      margin: 10px auto 30px;
+      border: none;
       border-radius: 10px;
-      color: #d63031;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
+      font-size: 1em;
+    }
+
+    .section-title {
+      font-size: 1.4em;
+      margin: 30px 0 10px;
+      text-decoration: underline;
     }
 
     .script-card {
-      background-color: #f0f7ff;
-      border: 2px solid #aed2ff;
+      background: rgba(255, 255, 255, 0.05);
+      margin: 10px auto;
       border-radius: 15px;
-      padding: 1.2rem;
-      margin-bottom: 1rem;
-      transition: 0.3s ease;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .script-card:hover {
-      transform: translateY(-2px);
-    }
-
-    #user-scripts .script-card.user {
-      background-color: #faf0ff;
-      border-color: #caa3ff;
+      padding: 15px;
+      width: 90%;
+      max-width: 600px;
+      text-align: left;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
     }
 
     .script-card h3 {
-      font-size: 1.3rem;
-      margin: 0 0 0.5rem;
-      color: #34495e;
+      margin-bottom: 5px;
+      color: #89CFF0;
     }
 
     .script-card p {
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-      color: #555;
+      font-size: 0.95em;
     }
 
-    button {
-      background-color: #4a90e2;
+    .script-card a {
       color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      margin-right: 0.5rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #357ac9;
-    }
-
-    .download-count {
+      font-weight: bold;
       display: inline-block;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      color: #666;
+      margin-top: 10px;
+      background: #89CFF0;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
     }
 
-    footer {
-      margin-top: 3rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #999;
+    .script-card a:hover {
+      background: #6faee3;
     }
 
-    .footer-credit::before {
-      content: "♥ ";
-      color: #f78fb3;
+    .count {
+      font-size: 0.9em;
+      opacity: 0.7;
     }
   </style>
 </head>
-
 <body>
-  <!-- Video Background -->
-  <video autoplay muted loop id="background-video">
-    <source src="https://files.catbox.moe/vcu8xd.mp4" type="video/mp4" />
-    Browser kamu tidak mendukung video background.
+  <video autoplay muted loop id="bgVideo">
+    <source src="https://files.catbox.moe/vcu8xd.mp4" type="video/mp4">
   </video>
 
-  <div class="container">
-    <h1 class="page-title">Script Gratis</h1>
+  <h1>Daftar Script Gratis Shiroko~</h1>
+  <input type="search" id="searchInput" placeholder="Cari script..."/>
 
-    <section id="team-section">
-      <h2>Share Script by Shiroko Team</h2>
-      <div id="team-scripts">
-        <div class="script-card">
-          <h3>Anti Delete Chat</h3>
-          <p>Mencegah pesan WhatsApp terhapus otomatis oleh pengirim.</p>
-          <button onclick="downloadTeamScript(0, 'shiroko-antidelete.zip')">Download</button>
-          <span id="team-download-0" class="download-count">0x diunduh</span>
-        </div>
-      </div>
-    </section>
+  <div class="section-title">Share Script by Shiroko Team</div>
+  <div id="shirokoScripts"></div>
 
-    <section id="user-section">
-      <div class="alert-box">
-        Script dari user di luar tanggung jawab tim Shiroko~ Harap periksa dengan teliti sebelum digunakan ya, Sensei!
-      </div>
-      <h2>Share Script by User</h2>
-      <div id="user-scripts">
-        <!-- Script dari user ditampilkan otomatis -->
-      </div>
-    </section>
-
-    <footer>
-      <p class="footer-credit">2025 create with pride by zass onee</p>
-    </footer>
-  </div>
+  <div class="section-title">Share Script by User</div>
+  <div id="userScripts"></div>
 
   <script>
-    let teamCounters = JSON.parse(localStorage.getItem("teamDownloads") || "null");
+    const shirokoTeam = [
+      {
+        judul: "Whatsapp Bot Kawaii",
+        deskripsi: "Bot WhatsApp lucu dengan fitur AI dan panel.",
+        link: "https://example.com/bot-kawaii",
+        download: 31
+      },
+      {
+        judul: "Panel Auto Creator",
+        deskripsi: "Script auto deploy panel Pterodactyl.",
+        link: "https://example.com/panel-creator",
+        download: 50
+      }
+    ];
 
-    if (!teamCounters) {
-      teamCounters = [0]; // Jumlah awal untuk script pertama
-      localStorage.setItem("teamDownloads", JSON.stringify(teamCounters));
-    }
+    const userScripts = JSON.parse(localStorage.getItem("scripts") || "[]");
 
-    function downloadTeamScript(index, filename) {
-      teamCounters[index] = (teamCounters[index] || 0) + 1;
-      localStorage.setItem("teamDownloads", JSON.stringify(teamCounters));
-      document.getElementById("team-download-" + index).innerText = teamCounters[index] + "x diunduh";
-      window.location.href = 'scripts/' + filename;
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      teamCounters.forEach((count, index) => {
-        const el = document.getElementById("team-download-" + index);
-        if (el) el.innerText = count + "x diunduh";
-      });
-    });
-
-    function downloadUserScript(index, link) {
-      const userScripts = JSON.parse(localStorage.getItem("userScripts") || "[]");
-      userScripts[index].downloads += 1;
-      localStorage.setItem("userScripts", JSON.stringify(userScripts));
-      window.open(link, '_blank');
-      setTimeout(() => location.reload(), 300);
-    }
-
-    function shareScript(index) {
-      const url = `${location.origin}${location.pathname}#user-${index}`;
-      navigator.clipboard.writeText(url).then(() => {
-        alert("Link berhasil disalin!");
-      });
-    }
-
-    const userScripts = JSON.parse(localStorage.getItem("userScripts") || "[]");
-    const userSection = document.getElementById("user-scripts");
-
-    userScripts.forEach((script, index) => {
-      const card = document.createElement("div");
-      card.className = "script-card user";
-      card.id = `user-${index}`;
-      card.innerHTML = `
-        <h3>${script.title}</h3>
-        <p>${script.description || "Tidak ada deskripsi."}</p>
-        <button onclick="downloadUserScript(${index}, '${script.link}')">Download</button>
-        <button onclick="shareScript(${index})">Bagikan</button>
-        <span class="download-count">${script.downloads}x diunduh</span>
+    function createCard(script, index, source) {
+      const div = document.createElement("div");
+      div.className = "script-card";
+      div.innerHTML = `
+        <h3>${script.judul}</h3>
+        <p>${script.deskripsi || 'Tidak ada deskripsi.'}</p>
+        <span class="count">Download: <span id="dl-${source}-${index}">${script.download}</span></span><br/>
+        <a href="${script.link}" target="_blank" onclick="addDownload('${source}', ${index})">Download</a>
       `;
-      userSection.appendChild(card);
-    });
-
-    if (location.hash.startsWith('#user-')) {
-      const target = document.querySelector(location.hash);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      return div;
     }
+
+    function loadScripts() {
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      const shirokoContainer = document.getElementById("shirokoScripts");
+      const userContainer = document.getElementById("userScripts");
+      shirokoContainer.innerHTML = "";
+      userContainer.innerHTML = "";
+
+      shirokoTeam.forEach((s, i) => {
+        if (s.judul.toLowerCase().includes(search)) {
+          shirokoContainer.appendChild(createCard(s, i, 'shiroko'));
+        }
+      });
+
+      userScripts.forEach((s, i) => {
+        if (s.judul.toLowerCase().includes(search)) {
+          userContainer.appendChild(createCard(s, i, 'user'));
+        }
+      });
+    }
+
+    function addDownload(source, index) {
+      if (source === 'user') {
+        const scripts = JSON.parse(localStorage.getItem("scripts") || "[]");
+        scripts[index].download++;
+        localStorage.setItem("scripts", JSON.stringify(scripts));
+        document.getElementById(`dl-user-${index}`).textContent = scripts[index].download;
+      } else {
+        shirokoTeam[index].download++;
+        document.getElementById(`dl-shiroko-${index}`).textContent = shirokoTeam[index].download;
+      }
+    }
+
+    document.getElementById("searchInput").addEventListener("input", loadScripts);
+    window.onload = loadScripts;
   </script>
 </body>
 </html>
