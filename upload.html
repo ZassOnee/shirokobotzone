@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Script & Dapatkan Panel Gratis~!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      overflow-x: hidden;
+      color: white;
+      text-align: center;
+      position: relative;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+      filter: brightness(0.5);
+    }
+
+    h1, h2 {
+      margin: 20px 10px;
+      animation: fadeInDown 1s ease;
+    }
+
+    p, li, label {
+      font-size: 1.1em;
+      margin: 10px;
+      animation: fadeIn 1s ease;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      animation: fadeInUp 1s ease;
+    }
+
+    input, textarea {
+      padding: 10px;
+      margin: 8px 4px;
+      width: calc(100% - 20px);
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #89CFF0;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #6faee3;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop class="bg-video">
+    <source src="https://files.catbox.moe/vcu8xd.mp4" type="video/mp4">
+  </video>
+
+  <h1>Upload Script & Dapatkan Panel Gratis~!</h1>
+  <p>Kamu bisa dapetin <strong>panel gratis</strong> kalau script kamu mencapai <strong>50 download!</strong><br>Yuk upload sekarang dan sebarkan~</p>
+
+  <h2>Cara Upload:</h2>
+  <ul style="list-style: none;">
+    <li>1. Upload script ke Mediafire, Google Drive, atau sejenisnya.</li>
+    <li>2. Salin link download file tersebut.</li>
+    <li>3. Isi form di bawah ini dengan data lengkap kamu.</li>
+    <li>4. Tunggu verifikasi dari tim Shiroko. Script kamu akan muncul di halaman utama!</li>
+  </ul>
+
+  <p><strong>Contoh Upload Mediafire:</strong><br>
+    Kunjungi <a href="https://www.mediafire.com/" target="_blank" style="color:#89CFF0;">Mediafire</a>, login/daftar, upload script (.zip atau .js), dan salin link-nya~
+  </p>
+
+  <form action="https://script.google.com/macros/s/AKfycbxhG1ECQGg4FLDdqrOqAu1p1xHjYUCIML8gbkHVL8NAvAuim-VIyX7BQTk6_pM44Ik/exec" method="POST">
+    <input type="text" name="nama" placeholder="Nama Kamu" required>
+    <input type="text" name="wa" placeholder="Nomor WhatsApp (08xxxx)" required>
+    <input type="text" name="judul" placeholder="Judul Script" required>
+    <textarea name="deskripsi" placeholder="Deskripsi Singkat (opsional)"></textarea>
+    <input type="url" name="link" placeholder="Link Download (https://...)" required>
+    <button type="submit">Upload Sekarang</button>
+  </form>
+</body>
+</html>
