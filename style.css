@@ -1,112 +1,160 @@
+/* Umum */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #f0f4ff;
+  background-color: #f7faff;
   color: #333;
-  text-align: center;
 }
 
-.popup {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.popup.hidden {
+.hidden {
   display: none;
 }
 
-.popup-content {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  max-width: 400px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  text-align: center;
-  animation: popupAnim 0.5s ease;
+/* Popup Style */
+.popup {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
 
-@keyframes popupAnim {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .popup-img {
   width: 120px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-.popup-buttons button,
-#list-syarat button,
-#okButton {
-  background: #6495ed;
+.popup-buttons {
+  margin-top: 15px;
+}
+
+.cute-button {
+  background: #84c1ff;
   color: white;
-  padding: 10px 20px;
-  margin: 6px;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 5px;
   cursor: pointer;
   font-weight: bold;
+  transition: transform 0.2s, background 0.3s;
 }
 
-.popup-buttons button:disabled {
-  background: #aaa;
+.cute-button:hover {
+  background: #68a6e4;
+  transform: scale(1.05);
 }
 
-#okButton.disabled {
+.cute-button.small {
+  padding: 7px 15px;
+  font-size: 14px;
+}
+
+.cute-button.disabled {
   background: gray;
+  cursor: not-allowed;
 }
 
-header {
-  margin: 20px 0;
+/* Header */
+.main-header {
+  padding: 20px;
+  text-align: center;
 }
 
-#searchInput {
-  padding: 8px;
+.main-header input {
   width: 80%;
-  max-width: 300px;
+  max-width: 400px;
+  padding: 10px;
   margin-top: 10px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #ccc;
 }
 
-main {
-  margin-top: 20px;
-}
-
+/* Shiroko Guide */
 .shiroko-guide {
-  margin-bottom: 30px;
+  text-align: center;
+  margin: 20px;
 }
 
 .shiroko-guide img {
   width: 100px;
 }
 
+.shiroko-guide p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* List Script */
+.script-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+}
+
 .script-card {
   background: white;
-  margin: 10px auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   padding: 15px;
-  border-radius: 15px;
-  max-width: 350px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 250px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.script-card:hover {
+  transform: translateY(-5px);
 }
 
 .script-card h3 {
-  margin: 0;
-  font-size: 1.2em;
+  margin-top: 0;
 }
 
+.script-card button {
+  display: block;
+  width: 100%;
+  background: #68a6e4;
+  color: white;
+  border: none;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.script-card button:hover {
+  background: #4a90e2;
+  transform: scale(1.05);
+}
+
+/* Footer */
 footer {
-  margin-top: 50px;
-  font-size: 0.9em;
+  text-align: center;
+  margin: 20px;
+  font-size: 14px;
+  color: #777;
 }
 
 .socials a {
-  color: #6495ed;
+  color: #68a6e4;
   text-decoration: none;
-  font-weight: bold;
+}
+
+.socials a:hover {
+  text-decoration: underline;
 }
