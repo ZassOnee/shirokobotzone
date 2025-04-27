@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NeoShiroko Labs - Gudang Script</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo'S Official - Gudang Script Bot WhatsApp</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div id="popup" class="popup">
-  <div class="popup-content">
-    <img src="https://i.ibb.co/9bG5vG9/chibi-shiroko-welcome.png" alt="Shiroko Welcome" class="popup-img">
-    <h1>Haii, Selamat Datang di Gudang Script Bot WhatsApp Free by Neo'S Official!</h1>
-    <p>Kamu kesini mau ngapain?</p>
-    <div class="popup-buttons">
-      <button id="cariScript" class="cute-button">Cari Script</button>
-      <button id="cariLoli" class="cute-button">Cari Loli</button>
+    <!-- Popup Awal -->
+    <div id="welcome-popup" class="popup">
+        <div class="popup-content">
+            <img src="shiroko-chibi.png" alt="Shiroko Chibi" class="popup-img">
+            <h2>Haii selamat datang di gudang script bot WhatsApp free by Neo'S Official</h2>
+            <p>Kamu kesini mau ngapain?</p>
+            <button id="btn-cari-script" onclick="showRequirements()">Cari Script</button>
+            <button id="btn-cari-loli" onclick="noLoli()">Cari Loli</button>
+        </div>
     </div>
-  </div>
-</div>
 
-<div id="syarat" class="popup hidden">
-  <div class="popup-content">
-    <h2>Eyytt ada syaratnya lohh~</h2>
-    <ul id="list-syarat">
-      <li><button id="subscribe" class="cute-button small">Subscribe YouTube</button></li>
-      <li><button id="follow" class="cute-button small">Follow Channel WhatsApp</button></li>
-      <li><button id="join" class="cute-button small">Join Grup (Opsional)</button></li>
-    </ul>
-    <button id="okButton" disabled class="cute-button disabled">Ok, Buresss~</button>
-  </div>
-</div>
-
-<div id="content" class="hidden">
-  <header class="main-header">
-    <h1>Gudang Script Bot WhatsApp</h1>
-    <input type="text" id="searchInput" placeholder="Cari Script...">
-  </header>
-
-  <div id="shirokoGuide" class="shiroko-guide">
-    <img id="shirokoImage" src="https://i.ibb.co/qRmxLb1/shiroko-chibi-tanya.png" alt="Shiroko Guide">
-    <p id="shirokoText">Mau cari script apa nih, onii-chan~?</p>
-  </div>
-
-  <main id="scriptList" class="script-list">
-    <!-- List Script akan muncul disini -->
-  </main>
-
-  <footer>
-    <p>© 2025 By Zass Onee</p>
-    <div class="socials">
-      <a href="https://www.youtube.com/@zassonee" target="_blank">YouTube</a> |
-      <a href="https://whatsapp.com/channel/0029Vb615brAzNbywHCyRc1w" target="_blank">Channel</a> |
-      <a href="https://chat.whatsapp.com/Bvdic3yrpFh5kTkk5oc5G0" target="_blank">Grup Promosi</a> |
-      <a href="https://chat.whatsapp.com/BlEl1NOINWR17TL70zpa2k" target="_blank">Grup Bot</a>
+    <!-- Daftar Script -->
+    <div id="script-list" class="content">
+        <div class="script-item">
+            <h3>Script 1</h3>
+            <button class="download-btn">Download</button>
+            <button class="about-btn" onclick="showAbout('Script 1')">Tentang</button>
+            <button class="share-btn" onclick="shareScript('Script 1')">Bagikan</button>
+        </div>
+        <div class="script-item">
+            <h3>Script 2</h3>
+            <button class="download-btn">Download</button>
+            <button class="about-btn" onclick="showAbout('Script 2')">Tentang</button>
+            <button class="share-btn" onclick="shareScript('Script 2')">Bagikan</button>
+        </div>
     </div>
-  </footer>
-</div>
 
-<script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 By Zass Onee</p>
+        <div class="social-icons">
+            <a href="https://t.me/zass" target="_blank">Telegram</a>
+            <a href="https://www.youtube.com/c/NeoSOfficial" target="_blank">YouTube</a>
+            <a href="https://wa.me/123456789" target="_blank">WhatsApp</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
