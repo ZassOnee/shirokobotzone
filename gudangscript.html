@@ -1,0 +1,528 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gudang Script Free - NeoShiroko Labs</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <style>
+  /* Import Google Font Poppins */
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap");
+
+  /* Reset CSS dan pengaturan default */
+  * {
+   padding: 0;
+   margin: 0;
+   font-family: "Poppins", sans-serif;
+   box-sizing: border-box;
+  }
+
+  /* Body styling */
+  body {
+   width: 100%;
+   min-height: 100vh;
+   background-image: url("./img/background.jpg"); /* Replace with your background image */
+   background-size: cover;
+   overflow-x: hidden;
+   position: relative;
+   color: white; /* Default text color - matches review sc */
+  }
+
+  /* Navbar styling */
+  nav {
+   width: 100%;
+   height: 10vh;
+   position: relative; /* Changed from sticky */
+   z-index: 1000;
+   /* Background color same as review sc */
+   /* backdrop-filter for blur effect */
+  }
+
+  .nav-container {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+  }
+
+  .logo {
+   color: white; /* Same as review sc */
+   font-size: 2rem;
+   font-weight: bold;
+  }
+
+  .logo span {
+   color: rgb(58, 211, 3); /* Green accent color */
+   text-shadow: 0 0 10px rgb(58, 211, 3);
+  }
+
+  .hamburg,
+  .cancel {
+   cursor: pointer;
+   position: absolute;
+   right: 15px;
+   top: 10px;
+   color: white; /* Same as review sc */
+   display: none;
+   font-size: clamp(2.5rem, 0.5rem + 5vw, 3rem);
+  }
+
+  .nav-container .links {
+   display: none; /* Hide default links */
+  }
+
+  .dropdown {
+   z-index: 1000;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   transform: translateY(-500px);
+   width: 100%;
+   height: auto;
+   backdrop-filter: blur(4px) brightness(40%); /* Same as review sc */
+   box-shadow: 0 0 20px black;
+   transition: 0.2s linear;
+  }
+
+  .dropdown .links a {
+   display: flex;
+   color: white; /* Same as review sc */
+   text-decoration: none;
+   padding: 15px 0;
+   justify-content: center;
+   align-items: center;
+   transition: 0.2s linear;
+  }
+
+  .dropdown .links a:hover {
+   background-color: rgb(58, 211, 3); /* Green hover */
+  }
+
+  /* Section styling */
+  section {
+   padding: 2.5rem 1rem;
+   max-width: 1300px;
+   margin: auto;
+  }
+
+  .search-box {
+   margin-bottom: 2rem;
+   text-align: center;
+  }
+
+  .search-box input {
+   padding: 12px 18px;
+   width: 90%;
+   max-width: 500px;
+   border-radius: 14px;
+   border: 1px solid rgb(58, 211, 3); /* Green border */
+   background: rgba(0, 0, 0, 0.7); /* Dark background */
+   color: white; /* Same as review sc */
+   outline: none;
+   font-size: 1rem;
+  }
+
+  .content-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+   gap: 2rem;
+   padding: 2rem 0;
+  }
+
+  .content-card {
+   background: rgba(58, 211, 3, 0.1); /* Light green background */
+   border-radius: 15px;
+   overflow: hidden;
+   transition: all 0.3s ease;
+   cursor: pointer;
+  }
+
+  .content-card:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 5px 15px rgba(58, 211, 3, 0.3); /* Green shadow */
+  }
+
+  .card-image {
+   width: 100%;
+   aspect-ratio: 16 / 9;
+   overflow: hidden;
+   border-radius: 10px;
+  }
+
+  .card-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   border-radius: 10px;
+  }
+
+  .card-info {
+   padding: 1.5rem;
+  }
+
+  .card-info h3 {
+   margin: 0 0 0.5rem 0;
+   font-size: 1.25rem;
+   color: rgb(58, 211, 3); /* Green title */
+  }
+
+  .card-info p {
+   font-size: 0.95rem;
+   color: white; /* Same as review sc */
+  }
+
+  .technologies {
+   margin-top: 0.8rem;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 0.5rem;
+  }
+
+  .technology-tag {
+   background: rgba(58, 211, 3, 0.2); /* Light green tag background */
+   padding: 0.3rem 0.8rem;
+   border-radius: 15px;
+   font-size: 0.8rem;
+   color: rgb(58, 211, 3); /* Green tag text */
+  }
+
+  .action-buttons button {
+   margin-top: 12px;
+   margin-right: 5px;
+   padding: 0.8rem 1.5rem;
+   background: rgb(58, 211, 3); /* Green button */
+   color: white; /* White button text */
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   font-weight: 550;
+   text-decoration: none;
+  }
+
+  .action-buttons button:hover {
+   background: rgb(45, 165, 2); /* Darker green hover */
+   transform: translateY(-2px);
+  }
+
+  /* Popup */
+  .popup {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.8); /* Darker background */
+   display: none;
+   align-items: center;
+   justify-content: center;
+   z-index: 999;
+  }
+
+  .popup-content {
+   background: rgba(0, 0, 0, 0.7); /* Dark background */
+   padding: 30px;
+   border-radius: 16px;
+   width: 90%;
+   max-width: 400px;
+   text-align: center;
+   box-shadow: 0 0 25px rgba(58, 211, 3, 0.3); /* Green shadow */
+   backdrop-filter: blur(10px);
+   color: white; /* White text */
+  }
+
+  .popup-content h2 {
+   margin-bottom: 1.5rem;
+   font-size: 1.6rem;
+   color: rgb(58, 211, 3); /* Green title */
+  }
+
+  .requirement {
+   margin: 12px 0;
+   cursor: pointer;
+   padding: 10px;
+   border: 1px solid rgb(58, 211, 3); /* Green border */
+   border-radius: 10px;
+   background: rgba(58, 211, 3, 0.05); /* Light green background */
+   color: white; /* White text */
+   font-weight: 500;
+  }
+
+  .requirement.checked {
+   background: rgb(58, 211, 3); /* Green checked background */
+   color: white; /* White checked text */
+   border-color: rgb(58, 211, 3);
+  }
+
+  .download-btn {
+   margin-top: 20px;
+   padding: 0.8rem 1.5rem;
+   background: rgb(58, 211, 3); /* Green button */
+   color: white; /* White button text */
+   border: none;
+   border-radius: 5px;
+   cursor: not-allowed;
+   transition: all 0.3s ease;
+   font-weight: 550;
+   text-decoration: none;
+  }
+
+  .download-btn.active {
+   background: rgb(45, 165, 2); /* Darker green active */
+   cursor: pointer;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 884px) {
+   .nav-container .links {
+    display: none;
+   }
+
+   .hamburg,
+   .cancel {
+    display: block;
+   }
+  }
+
+  @media (max-width: 440px) {
+   section {
+    padding: 1.5rem 0.5rem;
+   }
+
+   .search-box {
+    margin-bottom: 1.5rem;
+   }
+
+   .search-box input {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+   }
+
+   .content-grid {
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+   }
+
+   .card-info {
+    padding: 1rem;
+   }
+
+   .card-info h3 {
+    font-size: 1.1rem;
+   }
+
+   .card-info p {
+    font-size: 0.85rem;
+   }
+
+   .technology-tag {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+   }
+
+   .action-buttons button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    margin-right: 3px;
+   }
+
+   .popup-content {
+    padding: 20px;
+   }
+
+   .popup-content h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+   }
+
+   .requirement {
+    padding: 8px;
+    font-size: 0.9rem;
+    margin: 8px 0;
+   }
+
+   .download-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    margin-top: 15px;
+   }
+  }
+  </style>
+ </head>
+ <body>
+
+  <nav>
+   <div class="nav-container">
+    <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
+     NeoShiroko <span>Labs</span>
+    </div>
+    <div class="links">
+     </div>
+   </div>
+   <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+   <div class="dropdown">
+    <div class="links">
+     <a href="index.html">Home</a>
+     <a href="about.html">About</a>
+     <a href="skill.html">Skills</a>
+     <a href="gudangscript.html">Script Bot</a>
+     <a href="service.html">Service</a>
+     <a href="contact.html">Contact</a>
+     <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+    </div>
+   </div>
+  </nav>
+
+  <section>
+   <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Cari script...">
+   </div>
+
+   <div class="content-grid" id="scriptContainer"></div>
+  </section>
+
+  <div class="popup" id="popup">
+   <div class="popup-content">
+    <h2>Syarat Download</h2>
+    <div class="requirement" id="followChannel">Follow Channel WhatsApp</div>
+    <div class="requirement" id="subscribeYT">Subscribe YouTube</div>
+    <div class="requirement" id="joinGroup">Join Grup WhatsApp</div>
+    <button id="finalDownloadBtn" class="download-btn">Download Script</button>
+    <br><br>
+    <button onclick="closePopup()" class="download-btn active" style="background:#ff5555;">Tutup</button>
+   </div>
+  </div>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+  AOS.init({ offset: 0 });
+
+  const kontenyt = [
+   {
+    title: "Script CPanel Multi Server",
+    image: "img/konten1.jpg",
+    description: "Bot WA No Enc + Pairing. Cocok buat open reseller panel lebih dari satu server!",
+    technologies: ["JavaScript", "Node.js", "Zass Onee"],
+    file: "scripts/cpanel-multi.zip",
+    youtube: "https://youtube.com/yourchannel",
+    channelwa: "https://whatsapp.com/yourchannel",
+    groupwa: "https://chat.whatsapp.com/yourgroup"
+   },
+   {
+    title: "Dalam Pengembangan",
+    image: "img/kosong.jpg",
+    description: "Upload setiap 1 minggu sekali, stay tune ya!",
+    technologies: ["Node.js", "Chatbot", "AI Module"],
+    file: "#",
+    youtube: "#",
+    channelwa: "#",
+    groupwa: "#"
+   }
+  ];
+
+  const scriptContainer = document.getElementById('scriptContainer');
+  const popup = document.getElementById('popup');
+  let currentFile = "", currentLinks = {};
+
+  function renderScripts() {
+   scriptContainer.innerHTML = kontenyt.map(item => `
+     <div class="content-card" data-aos="fade-up">
+       <div class="card-image">
+         <img src="${item.image}" alt="${item.title}">
+       </div>
+       <div class="card-info">
+         <h3>${item.title}</h3>
+         <p>${item.description}</p>
+         <div class="technologies">
+           ${item.technologies.map(tech => `<span class="technology-tag">${tech}</span>`).join('')}
+         </div>
+         <div class="action-buttons">
+           <button onclick="openPopup('${item.file}', '${item.youtube}', '${item.channelwa}', '${item.groupwa}')">Download</button>
+           <button onclick="alert('${item.description.replace(/'/g, "\\'")}')">About</button>
+           <button onclick="copyLink()">Bagikan</button>
+         </div>
+       </div>
+     </div>
+    `).join('');
+  }
+
+  function openPopup(file, yt, channel, group) {
+   popup.style.display = 'flex';
+   currentFile = file;
+   currentLinks = { yt, channel, group };
+   resetRequirements();
+  }
+
+  function resetRequirements() {
+   document.querySelectorAll('.requirement').forEach(req => {
+    req.classList.remove('checked');
+   });
+   document.getElementById('finalDownloadBtn').classList.remove('active');
+   document.getElementById('finalDownloadBtn').disabled = true;
+  }
+
+  function closePopup() {
+   popup.style.display = 'none';
+  }
+
+  document.getElementById('followChannel').onclick = function() {
+   window.open(currentLinks.channel, "_blank");
+   this.classList.add('checked');
+   checkAll();
+  };
+  document.getElementById('subscribeYT').onclick = function() {
+   window.open(currentLinks.yt, "_blank");
+   this.classList.add('checked');
+   checkAll();
+  };
+  document.getElementById('joinGroup').onclick = function() {
+   window.open(currentLinks.group, "_blank");
+   this.classList.add('checked');
+   checkAll();
+  };
+
+  function checkAll() {
+   const allChecked = [...document.querySelectorAll('.requirement')].every(req => req.classList.contains('checked'));
+   const btn = document.getElementById('finalDownloadBtn');
+   if (allChecked) {
+    btn.classList.add('active');
+    btn.disabled = false;
+    btn.onclick = () => {
+     window.location.href = currentFile;
+    };
+   }
+  }
+
+  function copyLink() {
+   navigator.clipboard.writeText(window.location.href);
+   alert('Link halaman sudah disalin!');
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function() {
+   const keyword = this.value.toLowerCase();
+   const cards = document.querySelectorAll('.content-card');
+   kontenyt.forEach((item, idx) => {
+    cards[idx].style.display = item.title.toLowerCase().includes(keyword) ? "block" : "none";
+   });
+  });
+
+  /* Hamburger Menu Functionality */
+  function hamburg() {
+   const navbar = document.querySelector(".dropdown");
+   navbar.style.transform = "translateY(0px)";
+  }
+
+  function cancel() {
+   const navbar = document.querySelector(".dropdown");
+   navbar.style.transform = "translateY(-500px)";
+  }
+
+  renderScripts();
+  </script>
+
+ </body>
+ </html>
+ 
