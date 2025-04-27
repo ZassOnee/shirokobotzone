@@ -9,7 +9,6 @@ let sudahSubscribe = false;
 let sudahFollow = false;
 let sudahJoin = false;
 
-// Button Aksi
 cariScript.addEventListener('click', () => {
   popup.classList.add('hidden');
   syarat.classList.remove('hidden');
@@ -24,20 +23,18 @@ document.getElementById('subscribe').addEventListener('click', () => {
   window.open('https://www.youtube.com/@zassonee', '_blank');
   sudahSubscribe = true;
   cekSyarat();
-  tandaCheck('subscribe');
 });
 
 document.getElementById('follow').addEventListener('click', () => {
   window.open('https://whatsapp.com/channel/0029Vb615brAzNbywHCyRc1w', '_blank');
   sudahFollow = true;
   cekSyarat();
-  tandaCheck('follow');
 });
 
 document.getElementById('join').addEventListener('click', () => {
   window.open('https://chat.whatsapp.com/Bvdic3yrpFh5kTkk5oc5G0', '_blank');
   sudahJoin = true;
-  tandaCheck('join');
+  cekSyarat();
 });
 
 okButton.addEventListener('click', () => {
@@ -45,7 +42,6 @@ okButton.addEventListener('click', () => {
   content.classList.remove('hidden');
 });
 
-// Function cek syarat
 function cekSyarat() {
   if (sudahSubscribe && sudahFollow) {
     okButton.disabled = false;
@@ -53,20 +49,12 @@ function cekSyarat() {
   }
 }
 
-// Function checklist tombol
-function tandaCheck(id) {
-  const btn = document.getElementById(id);
-  btn.style.backgroundColor = '#4CAF50';
-  btn.textContent = "✔ Selesai";
-}
-
-// Dummy List Script
+// Data Script
 const scripts = [
-  { name: "Bot WhatsApp MD", desc: "Bot WA support MD terbaru!", download: "#", share: "#" },
+  { name: "Bot WhatsApp Multi-Device", desc: "Bot WA support MD terbaru!", download: "#", share: "#" },
   { name: "Panel Creator", desc: "Script panel bot keren dan simple.", download: "#" },
 ];
 
-// Tampilkan List Script
 const scriptList = document.getElementById('scriptList');
 
 function tampilScript() {
@@ -77,15 +65,14 @@ function tampilScript() {
     div.innerHTML = `
       <h3>${s.name}</h3>
       <p>${s.desc}</p>
-      <button onclick="window.location.href='${s.download}'">Download</button>
+      <button onclick="updateShiroko('download'); window.location.href='${s.download}'">Download</button>
       <button onclick="alert('${s.desc}')">Tentang</button>
-      <button onclick="navigator.clipboard.writeText('${window.location.href}')">Bagikan</button>
+      <button onclick="updateShiroko('share'); navigator.clipboard.writeText('${window.location.href}')">Bagikan</button>
     `;
     scriptList.appendChild(div);
   });
 }
 
-// Search Script
 document.getElementById('searchInput').addEventListener('input', function(e) {
   const keyword = e.target.value.toLowerCase();
   const filtered = scripts.filter(s => s.name.toLowerCase().includes(keyword));
@@ -96,9 +83,9 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
     div.innerHTML = `
       <h3>${s.name}</h3>
       <p>${s.desc}</p>
-      <button onclick="window.location.href='${s.download}'">Download</button>
+      <button onclick="updateShiroko('download'); window.location.href='${s.download}'">Download</button>
       <button onclick="alert('${s.desc}')">Tentang</button>
-      <button onclick="navigator.clipboard.writeText('${window.location.href}')">Bagikan</button>
+      <button onclick="updateShiroko('share'); navigator.clipboard.writeText('${window.location.href}')">Bagikan</button>
     `;
     scriptList.appendChild(div);
   });
@@ -107,19 +94,19 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
 
 tampilScript();
 
-// Update Shiroko Mood
+// Update Shiroko Text
 function updateShiroko(mode) {
   const shirokoImage = document.getElementById('shirokoImage');
   const shirokoText = document.getElementById('shirokoText');
 
   if (mode === "search") {
     shirokoImage.src = "https://i.ibb.co/qRmxLb1/shiroko-chibi-tanya.png";
-    shirokoText.textContent = "Lagi cari sesuatu ya? Hihi~ ketik aja!";
+    shirokoText.textContent = "Lagi cari sesuatu ya? Hihi~ ketik aja judul script-nya!";
   } else if (mode === "download") {
     shirokoImage.src = "https://i.ibb.co/BqjP69Z/shiroko-chibi-download.png";
-    shirokoText.textContent = "Yoshhh~ File siap diunduh, semangat!";
+    shirokoText.textContent = "Yoshhh~ File sudah siap diunduh, semangat ya onii-chan!";
   } else if (mode === "share") {
     shirokoImage.src = "https://i.ibb.co/5v9HhpS/shiroko-chibi-share.png";
-    shirokoText.textContent = "Bagikan script ini ke temanmu yaa~";
+    shirokoText.textContent = "Bagikan script ini ke temanmu yaa~ Biar makin ramai!";
   }
 }
