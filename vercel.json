@@ -1,9 +1,6 @@
 {
-  "redirects": [
-    {
-      "source": "index.html",
-      "destination": "zass",
-      "permanent": true
-    }
+  "rewrites": [
+    { "source": "/zasshome", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/contact.html" }
   ]
 }
