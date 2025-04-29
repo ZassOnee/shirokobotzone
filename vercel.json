@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/zasshome", "destination": "/index.html" },
-    { "source": "/contact", "destination": "/contact.html" }
-  ]
-}
