@@ -1,7 +1,7 @@
 {
   "redirects": [
     {
-      "source": "/index.html",
+      "source": "index.html",
       "destination": "zass",
       "permanent": true
     }
