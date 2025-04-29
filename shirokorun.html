@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shiroko Terminal Quiz</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+    }
+    .terminal {
+      border: 2px solid #00ff00;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      white-space: pre-line;
+      min-height: 300px;
+      overflow-y: auto;
+    }
+    #commandInput {
+      background: #000;
+      color: #00ff00;
+      border: none;
+      border-top: 1px solid #00ff00;
+      padding: 10px;
+      width: 100%;
+      font-family: inherit;
+      font-size: 16px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" id="terminal"></div>
+  <input type="text" id="commandInput" placeholder="user@shiroko:~$ ketik perintah di sini..." autofocus />
+  <audio id="beep" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const commandInput = document.getElementById('commandInput');
+    const beep = document.getElementById('beep');
+
+    let username = 'shiroko';
+    let gameStarted = false;
+    let isRegistering = false;
+    let waitingAnswer = false;
+
+    const questions = [
+  {
+    command: 'cd documents',
+    question: 'Apa yang dilakukan perintah di atas?',
+    options: [
+      'Membuka aplikasi dokumen',
+      "Masuk ke folder 'documents'",
+      "Menghapus folder 'documents'",
+      "Menyalin folder 'documents'"
+    ],
+    answer: 1
+  },
+  {
+    command: 'rm -rf /',
+    question: 'Apa efek dari perintah ini?',
+    options: [
+      'Menghapus semua file di sistem',
+      'Merefresh sistem operasi',
+      'Mengganti user root',
+      'Restart komputer'
+    ],
+    answer: 0
+  },
+  {
+    command: 'ls -a',
+    question: 'Apa fungsi dari flag `-a` pada perintah ls?',
+    options: [
+      'Menampilkan file berukuran besar',
+      'Menampilkan file dengan ekstensi .a',
+      'Menampilkan semua file, termasuk yang tersembunyi',
+      'Menampilkan semua file secara alfabet'
+    ],
+    answer: 2
+  },
+  {
+    command: 'pwd',
+    question: 'Apa output dari perintah ini?',
+    options: [
+      'Menampilkan password pengguna',
+      'Menampilkan direktori saat ini',
+      'Mengubah direktori kerja',
+      'Menampilkan direktori root'
+    ],
+    answer: 1
+  },
+  {
+    command: 'mkdir projek',
+    question: 'Apa yang dilakukan perintah ini?',
+    options: [
+      'Menghapus folder bernama projek',
+      'Membuat folder baru bernama projek',
+      'Masuk ke folder projek',
+      'Menyalin folder projek'
+    ],
+    answer: 1
+  },
+  {
+    command: 'touch file.txt',
+    question: 'Apa fungsi perintah di atas?',
+    options: [
+      'Menyalin file.txt ke folder lain',
+      'Menghapus file.txt',
+      'Membuat file kosong bernama file.txt',
+      'Membuka file.txt dengan editor'
+    ],
+    answer: 2
+  },
+  {
+    command: 'cp file1.txt file2.txt',
+    question: 'Apa hasil dari perintah ini?',
+    options: [
+      'Mengganti nama file1.txt menjadi file2.txt',
+      'Menyalin isi file2.txt ke file1.txt',
+      'Menyalin file1.txt menjadi file2.txt',
+      'Menggabungkan kedua file menjadi satu'
+    ],
+    answer: 2
+  },
+  {
+    command: 'mv file.txt folder/',
+    question: 'Apa yang terjadi saat perintah ini dijalankan?',
+    options: [
+      'File file.txt dihapus dari sistem',
+      'File file.txt dipindahkan ke dalam folder',
+      'File file.txt diganti nama jadi folder',
+      'Folder dipindahkan ke file.txt'
+    ],
+    answer: 1
+  },
+  {
+    command: 'cat file.txt',
+    question: 'Apa fungsi dari perintah ini?',
+    options: [
+      'Mengedit isi file.txt',
+      'Menampilkan isi dari file.txt di terminal',
+      'Menghapus isi file.txt',
+      'Menyalin file.txt ke clipboard'
+    ],
+    answer: 1
+  },
+  {
+    command: 'clear',
+    question: 'Apa yang dilakukan perintah ini?',
+    options: [
+      'Menghapus semua file di direktori saat ini',
+      'Menghapus isi terminal agar bersih',
+      'Menghapus cache browser',
+      'Menampilkan folder tersembunyi'
+    ],
+    answer: 1
+  }
+];
+
+
+    let current = 0;
+    let score = 0;
+    let highScore = localStorage.getItem('highScore') || 0;
+
+    function playBeep() {
+      beep.currentTime = 0;
+      beep.play();
+    }
+
+    function typeText(text, callback, delay = 30) {
+      let i = 0;
+      const interval = setInterval(() => {
+        terminal.innerHTML += text[i];
+        playBeep();
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          terminal.innerHTML += '\n';
+          if (callback) callback();
+        }
+        scrollToBottom();
+      }, delay);
+    }
+
+    function scrollToBottom() {
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function prompt() {
+      terminal.innerHTML += `\nneo-user@${username}:~$ `;
+    }
+
+    function showQuestion() {
+      const q = questions[current];
+      terminal.innerHTML += `\nneo-user@${username}:~$ ${q.command}\n${q.question}\n`;
+      q.options.forEach((opt, i) => {
+        terminal.innerHTML += `${String.fromCharCode(97 + i)}) ${opt}\n`;
+      });
+      terminal.innerHTML += `Ketik a, b, c, atau d:\n`;
+      waitingAnswer = true;
+      scrollToBottom();
+    }
+
+    function handleAnswer(char) {
+      const index = char.charCodeAt(0) - 97;
+      const correct = questions[current].answer;
+      waitingAnswer = false;
+      if (index === correct) {
+        score += 10;
+        typeText('\nBenar! +10 poin\n\n', nextStep);
+      } else {
+        typeText(`\nSalah! Jawaban benar: ${String.fromCharCode(97 + correct)}\n\n`, nextStep);
+      }
+    }
+
+    function nextStep() {
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        terminal.innerHTML += `\nSkor akhir kamu: ${score} poin`;
+        if (score > highScore) {
+          highScore = score;
+          localStorage.setItem('highScore', highScore);
+          terminal.innerHTML += `\nSkor tertinggi baru!`;
+        } else {
+          terminal.innerHTML += `\nSkor tertinggi: ${highScore}`;
+        }
+        terminal.innerHTML += `\nKetik "restart" untuk main lagi.`;
+        gameStarted = false;
+        prompt();
+      }
+      scrollToBottom();
+    }
+
+    function restart() {
+      current = 0;
+      score = 0;
+      terminal.innerHTML = '';
+      showQuestion();
+      gameStarted = true;
+    }
+
+    function showHelp() {
+      typeText(
+        '\nPerintah tersedia:\n' +
+        '- daftar   : Daftar dengan nama kamu\n' +
+        '- mulai    : Mulai quiz\n' +
+        '- berhenti : Keluar dari quiz\n' +
+        '- restart  : Mulai ulang quiz\n' +
+        '- score    : Tampilkan skor\n' +
+        '- clear    : Bersihkan terminal\n' +
+        '- about    : Tentang game\n' +
+        '- hack     : ??? (coba aja...)\n' +
+        '- exit     : Kembali ke halaman utama\n'
+      );
+    }
+
+    function showScore() {
+      typeText(`\nSkor saat ini: ${score}\nSkor tertinggi: ${highScore}\n`);
+    }
+
+    function clearTerminal() {
+      terminal.innerHTML = '';
+    }
+
+    function showAbout() {
+      typeText(
+        '\nShiroko Terminal Quiz v1.0 dibuat oleh Zass Onee sang owner sekaligus pengembang Neo-S Official.\n' +
+        'Tujuan game ini adalah belajar command line sambil santai.\n' +
+        'Shiroko siap menantangmu dengan pertanyaan-pertanyaan seru!\n'
+      );
+    }
+
+    function hackEasterEgg() {
+      const text = '\nMengakses sistem...\nMembobol firewall...\nBypassing...\nACCESS GRANTED\n';
+      typeText(text, () => {
+        const matrix = document.createElement('pre');
+        matrix.textContent = '01010110010111010101011011001010\n10101100101110100101101011011001\n11010101010110100110100110101010';
+        terminal.appendChild(matrix);
+        scrollToBottom();
+      }, 15);
+    }
+
+    function exitToMain() {
+      typeText('\nGoodbye...\n', () => {
+        setTimeout(() => location.href = 'index.html', 1200);
+      });
+    }
+
+    function stopGame() {
+      gameStarted = false;
+      typeText('\nQuiz dihentikan. Ketik "mulai" jika ingin bermain lagi.\n');
+    }
+
+    function showWelcome() {
+      typeText("Selamat datang di Shiroko Terminal Quiz!\nKetik 'daftar' untuk memulai petualangan mu.\nKetik 'help' untuk menampilkan daftar perintah.", prompt);
+    }
+
+    commandInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = commandInput.value.trim().toLowerCase();
+        commandInput.value = '';
+        terminal.innerHTML += `\nneo-user@${username}:~$ ${cmd}\n`;
+
+        if (isRegistering) {
+          username = cmd || 'user';
+          isRegistering = false;
+          typeText(`Halo, ${username}! Ketik 'mulai' untuk memulai game!\n`);
+          prompt();
+          return;
+        }
+
+        if (waitingAnswer && cmd.length === 1 && /^[a-d]$/.test(cmd)) {
+          handleAnswer(cmd);
+          return;
+        }
+
+        if (cmd === 'daftar') {
+          isRegistering = true;
+          typeText("Masukkan nama kamu:");
+        } else if (cmd === 'mulai') {
+          if (!gameStarted) restart();
+          else typeText("Game sedang berjalan. Ketik 'berhenti' untuk keluar.");
+        } else if (cmd === 'berhenti') {
+          if (gameStarted) stopGame();
+          else typeText("Kamu belum memulai quiz. Ketik 'mulai' untuk mulai.");
+        } else if (cmd === 'restart') {
+          restart();
+        } else if (cmd === 'help') {
+          showHelp();
+        } else if (cmd === 'score') {
+          showScore();
+        } else if (cmd === 'clear') {
+          clearTerminal();
+        } else if (cmd === 'about') {
+          showAbout();
+        } else if (cmd === 'hack') {
+          hackEasterEgg();
+        } else if (cmd === 'exit') {
+          exitToMain();
+        } else {
+          typeText('Perintah tidak dikenal\n');
+        }
+
+        scrollToBottom();
+      }
+    });
+
+    showWelcome();
+  </script>
+</body>
+</html>
